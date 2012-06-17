@@ -1,1 +1,113 @@
-SRS content
+
+              Software Requirements Specification
+                      BE Projects 2011-12
+                       Agriphone
+                      Group Code: 20
+
+                     Madhuri Gadhave
+                     Ashwini Jogdand
+                     Pournima Ambavale
+
+
+
+Table of Contents
+
+1	Introduction	
+1.1	Definitions, Acronyms and Abbreviations	
+1.2	References	
+2	Overall Description	
+3	Details	
+3.1	Functionality	
+3.2	Supportability	
+3.3	Interfaces	
+3.3.1	User Interfaces	
+3.3.2	Hardware Interfaces	
+3.3.3	Software Interfaces	
+3.3.4	Communications Interfaces	
+
+
+1. 1. Introduction
+        This project is about a agriphone which is able to do task related to agriculture for example we are doing image processing of captured pictures of fruits to determine whether it is ripened or unripened or having any disease which can be easily recognised from the captured picture of the plant.
+
+        For this purpose we are using android phone as it is easy to write programs in Java for android OS.
+  1. Definitions, Acronyms and Abbreviations
+         The android is software stack for mobile devices that includes an operating system,middle ware and key applications.
+         GSM is Global System for Mobile communications
+         SIM stands for Subscriber Identity Module
+  2. References
+www.android.com
+
+2. Overall Description
+          Product perspective :
+          This project will consists of android phone with camera with at least 3MP quality and balls of the color and size of ripened,unripened and over ripened tomatoes.
+
+         Product Functions :
+         1.Allocation of mobile phones in the greenhouse
+         2.Capturing of pictures of plants using continuous video streams.
+         3.Image processing of captured images.
+         4.Determination of result from image processing and giving the alert to owner of greenhouse by sending SMS.
+
+       Constraints :
+         There are many constraints related to this project which are given as follows:
+         1.Charging of battery of mobile phone is need to be checked
+         2.Distance from which picture of plant taken is also important
+         3.The quality of camera
+         4.The light illumination in the greenhouse may affect picture quality
+         5.There are diseases of plant which are not possible to detect with picture based processing
+         6.There are only three main stages of fruit life cycles are considered. 
+
+         Assumptions:
+         Here we are assuming that all fruits are of almost show same characteristics regarding fruit size and color in three main stages of fruit life cycle .
+3. Details
+Functionality
+               The functionality of this project includes detection of ripening stage of the fruit.There are three main ripening stages of the fruit 
+               1.Unripened (for e.g.color of unripened tomato is green)
+               2.Ripened (for e.g.color of ripened tomato is orange red)
+               3.Over ripened for e.g.color of ripened tomato is dark red)
+              Also during disease color of fruit changes from normal color to another color.  
+Supportability
+               Here we are using android phone which supports tools and APIs to develop applications on Android platform using Java programming language.
+
+  Interfaces
+     1. User Interfaces
+                        Agriphone will send SMSs to group of users regarding ripening stage of the  fruits
+     2. Hardware Interfaces
+                        Currently there is no need for any hardware interfaces.
+     3. Software Interfaces
+                         Software components will be classes and libraries required to do image processing on android platform.
+     4.  Communications Interfaces
+                         There is need for a GSM card as agriphone will be sending messages to group of users from phone.
+
+Quality Control
+Test Data
+Describe the test cases that your project will satisfy. If your bot is say rangoli bot tell us what figures it will eventually draw. 
+The test cases in this project are to detect the fruit and stage of ripeness of fruit.Here we are using plastic balls as a fruit or images of fruits which are already captured.
+1.If color of fruit is green then it must send SMS that fruit is unripened.
+2.If color of fruit is orange red  then it must send SMS that fruit is ripened.
+3.If color of fruit is dark red  then it must send SMS that fruit is over ripened.
+Also if there is any other color apart from above color then it must send SMS that fruit is having disease.
+Risk Management
+
+There are many risks as given below:
+1.Charging of battery must be done periodically 
+2.A GSM SIM must have enough balance in it to send SMSs to group of users.
+3.The quality of camera must be good enough to capture good quality of image.
+4.The light conditions must be maintained  to capture good quality pictures of fruits.
+
+
+Please enumerate the risks that your project is likely to face. Typical risks are that your problem statement is too complex. You lack a certain skill. You need a specialized hardware and so on. For every risk you need to have a mitigation plan. 
+
+If your project involved detecting a face, it may happen that you may not reach that much accuracy then you can failover to detecting fundamental shapes, even if that doesn’t work you can failover to just detecting color difference and so on. 
+
+Future Scope:
+
+This application is just a part of an overall automation process in greenhouse and not the complete end user project.
+ 
+But it is having a large future scope as technology has to improve further to enter in the field of an agriculture. 
+ 
+Our aim is to show that mobile phones can be used effectively in the field which is primarily depends on on human interaction such as agriculture.
+ 
+With the help of more complex coding we can develop this application to do other tasks in the agriculture field.
+ 
+
+

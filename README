@@ -1,0 +1,48 @@
+BE Project 2012 group no 20 Agriphone
+Group info:
+
+College : Padmabhushan Vasantdada Patil Prathishthans's College of Engineering
+
+
+  Madhuri Vilas Gadhave(computer engineering)
+  Ashwini Gokul Jogdand(computer engineering)
+  Pournima Santosh Ambavale(computer engineering)
+
+
+
+Project Description
+
+The project involves the developing the software on android based phone that can be used to control the greenhouse remotely in a simple way and avoid the human interventions.
+Android phone is fitted in a greenhouse or placed on a robot which will move in a
+greenhouse. Android phone will capture the images of fruits when timer is started.
+Then image processing is carried out on a captured image. After that automatically the
+degree of ripeness of fruits is calculated and user will come to know about the degree of
+ripeness of fruit automatically through SMS.
+
+
+Technologies Used
+Android Operation System:
+Android components
+Android Development Tools
+Eclipse 
+
+Installation Instructions
+
+STEP 1: Install JAVA  
+STEP 2: Install Eclipse IDE for Java Developers.
+             http://www.eclipse.org/downloads
+STEP 3: Download SDK starter package and install it.
+STEP 4: Install ADT plug-ins for Eclipse
+STEP 5: Add platform(API level 8) and other packages  
+STEP 6: Linking Your Phone to Your Computer
+
+References
+
+•  http://www.vogella.com/articles/Android/article.html#overview_adt
+
+•	http://www.stanford.edu/class/ee368/Android/Tutorial-1-Basic-Android-Setup-Windows.pdf
+
+•	http://developer.android.com/guide/developing/device.html
+
+Video Links
+

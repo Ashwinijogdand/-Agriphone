@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="crosshair_enabled"
+        android:summaryOff="Crosshair is disabled"
+        android:summaryOn="Crosshair is enabled"
+        android:title="Crosshair" >
+    </CheckBoxPreference>
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="show_rgb"
+        android:summaryOff="RGB display is now disabled"
+        android:summaryOn="RGB display is now enabled"
+        android:title="RGB values box" >
+    </CheckBoxPreference>
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="show_hsv"
+        android:summaryOff="HSV (Hue/Saturation/Value) display is now disabled"
+        android:summaryOn="HSV (Hue/Saturation/Value) display is now enabled"
+        android:title="HSV box" >
+    </CheckBoxPreference>
+
+    <ListPreference
+        android:defaultValue="com.agribot.colorrecognition.FlatRectEstimator"
+        android:entries="@array/estimator_names"
+        android:entryValues="@array/estimator_ids"
+        android:key="estimator"
+        android:summary="Select a method for obtaining color from image"
+        android:title="Estimator" >
+    </ListPreference>
+    <ListPreference
+        android:defaultValue="xkcd.dat"
+        android:entries="@array/classifier_names"
+        android:entryValues="@array/classifier_ids"
+        android:key="classifier"
+        android:summary="Select a method for color naming"
+        android:title="Classifier" >
+    </ListPreference>
+    <ListPreference
+        android:defaultValue="auto"
+        android:key="white_balance"
+        android:title="White balance" >
+    </ListPreference>
+
+</PreferenceScreen>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    <FrameLayout
+        android:id="@+id/frameLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <com.agribot.colorrecognition.Preview
+            android:id="@+id/m_preview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+        </com.agribot.colorrecognition.Preview>
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="10" >
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="20dip"
+                    android:layout_marginTop="30dip"
+                    android:background="@color/InfoBackground"
+                    android:orientation="horizontal" >
+
+                    <SurfaceView
+                        android:id="@+id/color_surface"
+                        android:layout_width="60dip"
+                        android:layout_height="60dip" >
+                    </SurfaceView>
+
+                    <TextView
+                        android:id="@+id/color_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dip"
+                        android:padding="10dip"
+                        android:text="No reading"
+                        android:textSize="22dip" >
+                    </TextView>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/debugtv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginLeft="10dip"
+                    android:padding="10dip" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/rgbinfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="30dip"
+                    android:layout_marginLeft="20dip"
+                    android:background="@color/InfoBackground"
+                    android:padding="10dip"
+                    android:text="No reading"
+                    android:textSize="15dip" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/hsvinfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="30dip"
+                    android:layout_marginRight="40dip"
+                    android:background="@color/InfoBackground"
+                    android:ellipsize="middle"
+                    android:padding="10dip"
+                    android:text="No reading"
+                    android:textSize="15dip" >
+                </TextView>
+
+                <ZoomControls
+                    android:id="@+id/zoomControls1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dip" >
+                </ZoomControls>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1" >
+
+                <ImageButton
+                    android:id="@+id/lock_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dip"
+                    android:layout_marginLeft="20dip"
+                    android:layout_weight="0"
+                    android:background="@color/InfoBackground"
+                    android:padding="10dip"
+                    android:src="@drawable/unlock" >
+                </ImageButton>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/tts_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dip"
+                    android:background="@color/InfoBackground"
+                    android:padding="10dip"
+                    android:src="@drawable/tts" >
+                </ImageButton>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="66dp"
+            android:layout_height="66dp"
+            android:layout_gravity="center"
+            android:src="@drawable/crosshair" >
+
+        </ImageView>
+    </FrameLayout>
+
+</LinearLayout>

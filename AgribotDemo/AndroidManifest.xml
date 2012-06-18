@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.agribot.dashboard"
+      android:versionCode="1"
+      android:versionName="1.0">
+  
+     <uses-sdk android:minSdkVersion="8" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    
+    
+    
+    <application 
+      android:theme="@style/Theme.D1"
+      android:icon="@drawable/icon" 
+      android:label="@string/app_name">
+      <activity android:name=".HomeActivity"
+                  android:label="@string/app_name">
+         <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+             <category android:name="android.intent.category.LAUNCHER" />
+         </intent-filter>
+      </activity>
+
+      
+      <activity android:name=".AboutActivity"
+            android:theme="@style/Theme.D1"
+            android:label="@string/title_about"
+            />
+      
+      
+    
+    
+    
+    
+     <activity
+            android:name="com.agribot.colorrecognition.AgribotActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" >
+        </activity>
+        
+        <activity
+            android:name=".Preferences"
+            android:label="Settings" >
+        </activity>
+        
+        <activity
+            android:name="com.agribot.colorrecognition.CTArchive"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" >
+        </activity>
+        
+        
+        
+        
+        
+        
+        
+        
+        <activity
+            android:name="com.agrobot.capturephoto.AgribotCapturePhoto"
+            android:label="@string/app_name" >
+        </activity>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <activity
+            android:name="com.agribot.automaticcapture.AgribotAlarmService"
+            android:label="@string/app_name" >
+        </activity>
+        
+        <activity
+            android:name="com.agribot.automaticcapture.CapturePhoto"
+            android:label="@string/app_name" >
+        </activity>
+        
+         <activity
+            android:name="com.agribot.automaticcapture.AfterCapture"
+            android:label="@string/app_name" >
+        </activity>
+        
+
+        <service android:name="com.agribot.automaticcapture.MyAlarmService" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" >
+                </action>
+            </intent-filter>
+        </service>
+    </application>
+    
+</manifest> 

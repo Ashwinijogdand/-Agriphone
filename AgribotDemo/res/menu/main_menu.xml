@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/settings" android:title="Settings" android:titleCondensed="Settings"></item>
-    <item android:id="@+id/save_to_archive" android:titleCondensed="Add to archive" android:title="Add to archive"></item>
-    <item android:titleCondensed="Open archive" android:title="Open archive" android:id="@+id/open_archive"></item>
-</menu>

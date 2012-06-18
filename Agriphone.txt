@@ -1,0 +1,530 @@
+***************************************************************************************************************************************************************** AUTOMATIC CAPTURE
+AfterCapture.java
+package com.agribot.automaticcapture;
+ import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.agribot.dashboard.R;
+import com.agrobot.capturephoto.AgribotCapturePhoto;
+public class AfterCapture extends Activity {
+	ImageView imageView;
+	ProgressBar progressBar;
+	TextView textView;
+		@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.afterautomaticcapture);
+		imageView=(ImageView) findViewById(R.id.afterimagecapture);
+		progressBar=(ProgressBar) findViewById(R.id.progressBar1);
+		textView=(TextView) findViewById(R.id.afterimagecapturetext);
+		imageView.setVisibility(View.INVISIBLE);
+		textView.setVisibility(View.INVISIBLE);
+		progressBar.setVisibility(View.VISIBLE);
+		System.out.println(Preview.phototakenname);
+				Bitmap bitmap = BitmapFactory.decodeFile("/sdcard/"+Preview.phototakenname+".jpg");
+		Bitmap newphoto = AgribotCapturePhoto.doGreyscale(bitmap);
+		Bitmap newphoto2 = AgribotCapturePhoto.binarize(newphoto, bitmap);
+		String a = "";
+		a = AgribotCapturePhoto.findcolor(newphoto2);
+		/*imageView.setLayoutParams(new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.WRAP_CONTENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT));
+		imageView.getLayoutParams().height = 300;
+		imageView.getLayoutParams().width = 300;
+		imageView.setImageBitmap(newphoto2);*/
+		Log.d("", ""+a);
+		 Toast.makeText(this, a, Toast.LENGTH_LONG).show();
+		textView.setText(a);
+		imageView.setImageBitmap(newphoto2);
+		progressBar.setVisibility(View.GONE);
+		imageView.setVisibility(View.VISIBLE);
+		textView.setVisibility(View.VISIBLE);
+		}
+	}
+************************************************************************************
+AgribotAlarmService.java
+package com.agribot.automaticcapture;
+import java.util.Calendar;
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TimePicker;
+import android.widget.Toast;
+import com.agribot.dashboard.R;
+public class AgribotAlarmService extends Activity {
+	private PendingIntent pendingIntent;
+	private TimePicker start;
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.alarmservice);
+		Button buttonStart = (Button) findViewById(R.id.startAlarm);
+		Button buttonStop = (Button) findViewById(R.id.stopAlarm);
+		start = (TimePicker) findViewById(R.id.from);
+		Intent myIntent = new Intent(AgribotAlarmService.this,
+				MyAlarmService.class);
+				pendingIntent = PendingIntent.getService(
+				AgribotAlarmService.this, 0, myIntent, 0);
+		buttonStart.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View arg0) {
+				AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+				Calendar calendar = Calendar.getInstance();
+				calendar.set(Calendar.SECOND, 1);
+				calendar.set(Calendar.HOUR_OF_DAY,start.getCurrentHour());
+				calendar.set(Calendar.MINUTE,start.getCurrentMinute());
+				
+				alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 24*60*60*1000, pendingIntent);
+				//alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+				//Toast.makeText(AgribotAlarmService.this, "Start Alarm",	Toast.LENGTH_LONG).show();
+			}
+		});
+		buttonStop.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+				alarmManager.cancel(pendingIntent);
+						// Tell the user about what we did.
+				Toast.makeText(AgribotAlarmService.this, "Cancel!",
+						Toast.LENGTH_LONG).show();
+			}
+		});
+}}
+************************************************************************************* CapturtePhoto.java
+package com.agribot.automaticcapture;
+import android.app.Activity;
+import android.hardware.Camera;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import com.agribot.dashboard.R;
+public class CapturePhoto extends Activity{
+	private static final String TAG = "CameraDemo";
+	Camera camera;
+	Preview preview;
+	Button buttonClick;
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.camerapreview);
+		preview = new Preview(this);
+		((FrameLayout) findViewById(R.id.preview)).addView(preview);
+			Log.d(TAG, "onCreate'd");
+	}
+}
+*************************************************************************************MyAlarmService.java
+package com.agribot.automaticcapture;
+import android.app.Service;
+import android.content.Intent;
+import android.hardware.Camera;
+import android.os.IBinder;
+import android.view.LayoutInflater;
+import android.widget.Toast;
+public class MyAlarmService extends Service {
+	Camera camera;
+	Preview preview;
+	LayoutInflater layoutInflater;
+	@Override
+	public void onCreate() {
+		//	Toast.makeText(this, "MyAlarmService.onCreate()", Toast.LENGTH_LONG).show();
+	}
+	@Override
+	public IBinder onBind(Intent intent) {
+		// TODO Auto-generated method stub
+		Toast.makeText(this, "MyAlarmService.onBind()", Toast.LENGTH_LONG).show();
+		return null;
+	}
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		Toast.makeText(this, "MyAlarmService.onDestroy()", Toast.LENGTH_LONG).show();
+	}
+	@Override
+	public void onStart(Intent intent, int startId) {
+			Toast.makeText(this, "MyAlarmService.onStart()", Toast.LENGTH_SHORT).show();
+		Intent intent1 = new Intent(getBaseContext(), CapturePhoto.class);
+		intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		getApplicationContext().startActivity(intent1);
+		super.onStart(intent, startId);
+		}
+	@Override
+	public boolean onUnbind(Intent intent) {
+		// TODO Auto-generated method stub
+		return super.onUnbind(intent);
+	}
+	
+}
+Preview.java
+package com.agribot.automaticcapture;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import android.content.Context;
+import android.content.Intent;
+import android.hardware.Camera;
+import android.hardware.Camera.PictureCallback;
+import android.hardware.Camera.PreviewCallback;
+import android.util.Log;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.widget.TextView;
+class Preview extends   SurfaceView implements SurfaceHolder.Callback {
+    private static final String TAG = "Preview";
+    static String phototakenname;
+    Context c;
+    SurfaceHolder mHolder;  
+    public Camera camera; 
+    public int count=0;
+        TextView textView;
+        Preview(Context context) {
+      super(context);
+      c=context;
+            mHolder = getHolder();  
+      mHolder.addCallback(this); 
+      mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS); 
+      
+    }
+    public void surfaceCreated(SurfaceHolder holder) { 
+      
+      camera = Camera.open();
+            TextView tv= new TextView(getContext());
+           try {
+        camera.setPreviewDisplay(holder); 
+        camera.setPreviewCallback(new PreviewCallback() { 
+        	public void onPreviewFrame(byte[] data, Camera camera) {  
+            Log.d(TAG, "onPreviewFrame called at: " + System.currentTimeMillis());
+            Preview.this.invalidate();  
+            if(count==10)
+            {                          	Preview.this.camera.takePicture(null, null, new PictureCallback() {
+            				public void onPictureTaken(byte[] data, Camera camera)
+ {            			
+            		phototakenname=""+System.currentTimeMillis();
+			FileOutputStream outStream = null;
+		try {
+		outStream = new FileOutputStream("/sdcard/"+phototakenname+".jpg");	
+		outStream.write(data);
+		outStream.close();
+	Log.d("", "Photo Taken Name: " +phototakenname);
+	Intent i =new Intent(c, AfterCapture.class);
+		c.startActivity(i);
+	Log.d("", "onPictureTaken - wrote bytes: " + data.length);
+			}
+ catch (FileNotFoundException e) 
+{
+		e.printStackTrace();
+} catch (IOException e) 
+{
+	e.printStackTrace();
+} finally {
+}
+	Log.d("", "onPictureTaken - jpeg");		
+					}
+            	});
+            	}
+            else
+            	count++;
+            System.out.println(count);
+          }
+        });
+        
+      } catch (IOException e) { 
+        e.printStackTrace();
+      }
+    } 
+   // Called when the holder is destroyed
+    public void surfaceDestroyed(SurfaceHolder holder) {  // <14>
+      camera.stopPreview();
+      camera.release();
+      camera = null;
+    }
+    // Called when holder has changed
+    public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) { // <15>
+      camera.startPreview();
+    }
+  }
+*************************************************************************************
+*************************************************************************************Agribot 
+AgribotCapturephoto.java
+package com.agrobot.capturephoto;
+
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.telephony.SmsManager;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import com.agribot.dashboard.R;
+public class AgribotCapturePhoto extends Activity {
+	Button button;
+	ImageView imageView;
+	int requestcode = 114;
+	Bitmap photo, newphoto, newphoto2, newphoto3;
+	TextView textView;
+	 public static Bitmap doGreyscale(Bitmap src) {
+		// constant factors
+		final double GS_RED = 0.299;
+		final double GS_GREEN = 0.587;
+		final double GS_BLUE = 0.114;
+		// create output bitmap
+		Bitmap bmOut = Bitmap.createBitmap(src.getWidth(), src.getHeight(),
+				src.getConfig());
+		// pixel information
+		int A, R, G, B;
+		int pixel;
+		// get image size
+		int width = src.getWidth();
+		int height = src.getHeight();
+		// scan through every single pixel
+		for (int x = 0; x < width; ++x) {
+			for (int y = 0; y < height; ++y) {
+				// get one pixel color
+				pixel = src.getPixel(x, y);
+				// retrieve color of all channels
+				A = Color.alpha(pixel);
+				R = Color.red(pixel);
+				G = Color.green(pixel);
+				B = Color.blue(pixel);
+				// take conversion up to one single value
+				R = G = B = (int) (GS_RED * R + GS_GREEN * G + GS_BLUE * B);
+				// set new pixel color to output bitmap
+				bmOut.setPixel(x, y, Color.argb(A, R, G, B));
+			}
+		}
+		// return final image
+		return bmOut;
+	}
+	 public static Bitmap binarize(Bitmap original, Bitmap original2) {
+		int red;
+		int newPixel, pixel;
+		int threshold = otsuTreshold(original);
+		System.out.println(">>>>>>>>>>>>>     " + threshold);
+		Bitmap binarized = Bitmap.createBitmap(original.getWidth(),
+				original.getHeight(), original.getConfig());
+		int[] pix = new int[original.getWidth() * original.getHeight()];
+		for (int i = 0; i < original.getWidth(); i++) {
+			for (int j = 0; j < original.getHeight(); j++) {
+				float[] hsv = new float[3];
+				pixel = original.getPixel(i, j); // Get pixels
+				int index = i * original.getWidth() + j;
+				int A = Color.alpha(pixel);
+				int R = Color.red(pixel);
+				Color.colorToHSV(original2.getPixel(i, j), hsv);
+				float H = hsv[0];
+				float S = hsv[1];
+				float V = hsv[2];
+				if (H > threshold) {
+					newPixel = 255;
+					newPixel = colorToRGB(0xff, newPixel, newPixel, newPixel);
+					binarized.setPixel(i, j, newPixel);
+				} else {
+		binarized.setPixel(i, j, Color.HSVToColor(hsv));
+			}
+				// newPixel = colorToRGB(0xff, newPixel, newPixel, newPixel);
+			}
+		}
+		return binarized;
+	}
+	 public static int colorToRGB(int alpha, int red, int green, int blue) {
+		int newPixel = 0;
+		newPixel += alpha;
+		newPixel = newPixel << 8;
+		newPixel += red;
+		newPixel = newPixel << 8;
+		newPixel += green;
+		newPixel = newPixel << 8;
+		newPixel += blue;
+return newPixel;
+	}
+	 public static int[] imageHistogram(Bitmap input) {
+		int[] histogram = new int[256];
+		int[] pix = new int[input.getWidth() * input.getHeight()];
+		int pixel;
+		for (int i = 0; i < histogram.length; i++)
+			histogram[i] = 0;
+		for (int i = 0; i < input.getWidth(); i++) {
+			for (int j = 0; j < input.getHeight(); j++) {
+				pixel = input.getPixel(i, j); // Get pixels
+				int index = i * input.getWidth() + j;
+				int R = Color.red(pixel);
+				// bitwise shifting
+				histogram[R]++;
+			}
+		}
+		return histogram;
+	}
+	 public static int otsuTreshold(Bitmap original) {
+		int[] histogram = imageHistogram(original);
+		int total = original.getHeight() * original.getWidth();
+		float sum = 0;
+		for (int i = 0; i < 256; i++)
+			sum += i * histogram[i];
+
+		float sumB = 0;
+		int wB = 0;
+		int wF = 0;
+		float varMax = 0;
+		int threshold = 0;
+		for (int i = 0; i < 256; i++) {
+			wB += histogram[i];
+			if (wB == 0)
+				continue;
+			wF = total - wB;
+			if (wF == 0)
+				break;
+			sumB += (float) (i * histogram[i]);
+			float mB = sumB / wB;
+			float mF = (sum - sumB) / wF;
+			float varBetween = (float) wB * (float) wF * (mB - mF) * (mB - mF);
+			if (varBetween > varMax) {
+				varMax = varBetween;
+				threshold = i;
+			}
+		}
+		return threshold;
+	}
+	 public static String findcolor(Bitmap newphoto4) {
+		// Toast.makeText(this,""+newphoto4.getHeight()*newphoto4.getWidth(),Toast.LENGTH_SHORT);
+		int[] pix = new int[newphoto4.getWidth() * newphoto4.getHeight()];
+		int pixel, unripe = 0, medripe = 0, ripe = 0, total = 0;
+		for (int i = 0; i < newphoto4.getWidth(); i++) {
+			for (int j = 0; j < newphoto4.getHeight(); j++) {
+
+				float[] hsv = new float[3];
+				pixel = newphoto4.getPixel(i, j); // Get pixels
+				Color.colorToHSV(newphoto4.getPixel(i, j), hsv);
+				float H = hsv[0];
+				float S = hsv[1];
+				float V = hsv[2];
+				int R = Color.red(pixel);
+				int G = Color.green(pixel);
+				int B = Color.blue(pixel);
+				//System.out.println("  H -->" + H + "   S -->" + S + "   V -->"	+ V);
+				if (((H >= 2.0 && H <= 6.0) || (H >= 350.0 && H <= 360.0)
+				&& S >= 0.83 && S <= 0.85 && V >= 0.45 && V <= 1.0)
+			|| ((R >= 150) && (R <= 255) && (G >= 0) && (G <= 75)
+					&& (B >= 0) && (B < 75))) {
+					//System.out.println("RED");
+					ripe++;
+				}
+	if (((H >= 20.0 && H <= 50.0) && (S >= 0.65 && S <= 1.00) && (V >= 0.65 && V <= 1.00))
+	|| ((R >= 233 && H <= 255) && (R >= 69 && R <= 160) && ((G >= 0 && G <= 122)))) {
+					//System.out.println("ORANGE");
+					medripe++;
+				}
+				//
+				if (R == 178 && G == 236 && B == 93)
+					unripe++;
+				if (R == 124 && G == 252 && B == 0)
+					unripe++;
+				if (R == 102 && G == 255 && B == 0)
+					unripe++;
+				if (R == 172 && G == 225 && B == 175)
+					unripe++;
+				if (R == 178 && G == 190 && B == 181)
+					unripe++;
+				if (R == 163 && G == 193 && B == 173)
+					unripe++;
+				if (R == 147 && G == 197 && B == 114)
+					unripe++;
+				if (R == 133 && G == 187 && B == 101)
+					unripe++;
+				if (R == 3 && G == 192 && B == 60)
+					unripe++;
+				if (R == 120 && G == 134 && B == 107)
+					unripe++;
+				if (R == 115 && G == 134 && B == 120)
+					unripe++;
+				if (R == 0 && G == 128 && B == 0)
+					unripe++;
+				if (R == 19 && G == 136 && B == 8)
+					unripe++;
+				if ((R >= 175) && (R <= 250) && (G >= 100) && (G <= 255)
+						&& (B >= 0) && (B < 10)) {
+					unripe++;
+					//System.out.println(" Unripe ");
+				}
+				// if (!((H == 60.0) && (S == 0.0) && (V == 1.0)) || ((H == 0.0)
+				// && (S == 0.0)&& ((V >= 0.30) && (V <= 0.40)))) {
+				// total++;
+				//
+				//
+				// }
+		if (!((R == 255 && G == 255 && B == 255))
+		|| (((H == 60.0) && (S == 0.0) && (V == 1.0)) || ((H == 0.0)
+			&& (S == 0.0) && ((V >= 0.30) && (V <= 0.40))))) {
+			total++;
+		}
+}
+}
+		int totalpercent = unripe + medripe + ripe;
+		String a = "UNRIPE: " + ((unripe * 100) / totalpercent) + "%  MEDRIPE: "
+				+ ((medripe * 100) / totalpercent) + "%  RIPE: "
+				+ ((ripe * 100) / totalpercent) + " %    ";
+				//+ "    Threshold :" + otsuTreshold(newphoto4);
+		// TODO Auto-generated method stub
+		return a;
+	}
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.agribotrealtime);
+		button = (Button) findViewById(R.id.button1);
+		imageView = (ImageView) findViewById(R.id.imageview);
+		textView = (TextView) findViewById(R.id.state);
+		// imageView.getLayoutParams().height = 50;
+		button.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(
+					android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				startActivityForResult(i, requestcode);
+			}
+		});
+	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == requestcode) {
+			photo = (Bitmap) data.getExtras().get("data");
+			newphoto = doGreyscale(photo);
+			newphoto2 = binarize(newphoto, photo);
+			String a = "";
+			a = findcolor(newphoto2);
+			imageView.setLayoutParams(new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT,
+					LinearLayout.LayoutParams.WRAP_CONTENT));
+			imageView.getLayoutParams().height = 300;
+			imageView.getLayoutParams().width = 300;
+			imageView.setImageBitmap(newphoto2);
+			textView.setText(a);
+			  //Sending sms
+			PendingIntent pi = PendingIntent.getActivity(this,0,data, 0);
+			SmsManager sms = SmsManager.getDefault();
+			  sms.sendTextMessage("8097511597", null, a, pi,null);
+			}
+		}
+}
+
+

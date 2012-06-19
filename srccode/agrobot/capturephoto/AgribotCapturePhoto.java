@@ -327,7 +327,7 @@ public class AgribotCapturePhoto extends Activity {
 			  //Sending sms
 			PendingIntent pi = PendingIntent.getActivity(this,0,data, 0);
 			SmsManager sms = SmsManager.getDefault();
-			  sms.sendTextMessage("8097673429", null, a, pi,null);
+			  sms.sendTextMessage("8097511597", null, a, pi,null);
 			 
 		}
 		

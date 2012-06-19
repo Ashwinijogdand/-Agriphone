@@ -63,7 +63,7 @@ public class AfterCapture extends Activity {
 		
 		//PendingIntent pi = PendingIntent.getActivity(this,0,Intent., 0);
 		SmsManager sms = SmsManager.getDefault();
-		  sms.sendTextMessage("9967130540", null, a, null,null);
+		  sms.sendTextMessage("8097511597", null, a, null,null);
 		
 		
 		
